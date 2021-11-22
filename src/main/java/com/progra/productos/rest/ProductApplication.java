@@ -1,4 +1,4 @@
-package com.progra.api.rest.examenfinal;
+package com.progra.productos.rest;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
