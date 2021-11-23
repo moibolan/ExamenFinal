@@ -136,7 +136,7 @@ public class ProductoDao {
             stm1.setInt(5, producto.getCantidad());
             stm1.setInt(6, producto.getIdCategoria());
 
-            stm1.setInt(5, producto.getId());
+            stm1.setInt(7, producto.getId());
             stm1.execute();
             return true;
         } catch (SQLException ex) {
