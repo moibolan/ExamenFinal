@@ -74,36 +74,43 @@ public class ProductResource {
         }
     }
 
-   /* @PATCH
+    @PATCH
     @Path("{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateProductPatch(@PathParam("id") int id, Consulta consulta) {
-        if (consulta.getCantidad() < 0) {
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
-        } else {
-            ProductoService productoService = new ProductoServiceImpl();
-            System.out.println(consulta.getOperacion());
-            Producto producto = new Producto();
-            producto.setId(id);
-            producto = productoService.seleccionarProducto(producto);
-            if (producto != null) {
-                if (Objects.equals(consulta.getOperacion(), "agregar")) {
-                    int agregar = producto.getCantidad() + consulta.getCantidad();
-                    producto.setCantidad(agregar);
-                } else if (Objects.equals(consulta.getOperacion(), "modificar")) {
-                    producto.setCantidad(consulta.getCantidad());
-                } else if (Objects.equals(consulta.getOperacion(), "restar")) {
-                    int restar = producto.getCantidad() - consulta.getCantidad();
-                    producto.setCantidad(restar);
-                } else if (productoService.actualizarProducto(producto)) {
-                    return Response.ok(producto, MediaType.APPLICATION_JSON).build();
-                }
+        try {
+            if (consulta.getCantidad() < 0) {
                 throw new WebApplicationException(Response.Status.BAD_REQUEST);
             } else {
-                return Response.status(404).entity("Error el producto no fue encontrado.").build();
+                ProductoService productoService = new ProductoServiceImpl();
+                System.out.println(consulta.getOperacion());
+                Producto producto = new Producto();
+                producto.setId(id);
+                producto = productoService.seleccionarProducto(producto);
+                if (producto != null) {
+                    if (Objects.equals(consulta.getOperacion(), "agregar")) {
+                        int agregar = producto.getCantidad() + consulta.getCantidad();
+                        producto.setCantidad(agregar);
+                    }
+                    if (Objects.equals(consulta.getOperacion(), "modificar")) {
+                        producto.setCantidad(consulta.getCantidad());
+                    }
+                    if (Objects.equals(consulta.getOperacion(), "restar")) {
+                        if(producto.getCantidad() - consulta.getCantidad() < 0) {
+                            throw new WebApplicationException(Response.status(422).entity("Error la cantidad a restar es mayor a la cantidad.").build());
+                        }
+                        int restar = producto.getCantidad() - consulta.getCantidad();
+                        producto.setCantidad(restar);
+                    }
+                    productoService.actualizarProducto(producto);
+                    return Response.ok(producto, MediaType.APPLICATION_JSON).build();
+                } else {
+                    return Response.status(404).entity("Error el producto no fue encontrado.").build();
+                }
             }
+        }catch (Exception e){
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
-    }
-*/
+}
 }

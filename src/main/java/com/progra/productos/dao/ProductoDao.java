@@ -141,7 +141,4 @@ public class ProductoDao {
             System.out.println("Error:" + ex.fillInStackTrace());
         }
     }
-
-
-
 }
