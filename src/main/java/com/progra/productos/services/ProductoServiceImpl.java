@@ -3,6 +3,8 @@ package com.progra.productos.services;
 import com.progra.productos.dao.ProductoDao;
 import com.progra.productos.entities.Producto;
 
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 
 public class ProductoServiceImpl implements ProductoService {
@@ -20,8 +22,8 @@ public class ProductoServiceImpl implements ProductoService {
     }
 
     @Override
-    public Boolean actualizarProducto(Producto producto) {
-        return productoDao.actualizarProducto(producto);
+    public void actualizarProducto(Producto producto) {
+        productoDao.actualizarProducto(producto);
     }
 
     @Override

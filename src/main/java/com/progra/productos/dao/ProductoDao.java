@@ -122,34 +122,25 @@ public class ProductoDao {
     }
 
     //metodo para actualizar
-    public boolean actualizarProducto(Producto producto){
+    public void actualizarProducto(Producto producto){
         try {
-
             String consulta = "update producto " +
                     " set nombre = ?, descripcion=?, url=?, precio=?, cantidad=?, id_categorias=? where id_productos=? ";
             PreparedStatement stm1 = connection.prepareStatement(consulta);
+                stm1.setString(1, producto.getNombre());
+                stm1.setString(2, producto.getDescripcion());
+                stm1.setString(3, producto.getUrl());
+                stm1.setDouble(4, producto.getPrecio());
+                stm1.setInt(5, producto.getCantidad());
+                stm1.setInt(6, producto.getIdCategoria());
 
-            stm1.setString(1, producto.getNombre());
-            stm1.setString(2, producto.getDescripcion());
-            stm1.setString(3, producto.getUrl());
-            stm1.setDouble(4, producto.getPrecio());
-            stm1.setInt(5, producto.getCantidad());
-            stm1.setInt(6, producto.getIdCategoria());
-
-            stm1.setInt(7, producto.getId());
-            stm1.execute();
-            return true;
-        } catch (SQLException ex) {
+                stm1.setInt(7, producto.getId());
+                stm1.execute();
+        } catch (NullPointerException | SQLException ex) {
             Logger.getLogger(ProductoDao.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("Error:" + ex.fillInStackTrace());
-            return false;
         }
-
     }
-
-
-
-
 
 
 

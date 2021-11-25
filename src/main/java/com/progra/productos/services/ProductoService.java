@@ -8,7 +8,7 @@ public interface ProductoService {
 
     public Boolean insertarProducto(Producto producto);
 
-    public Boolean actualizarProducto(Producto producto);
+    public void actualizarProducto(Producto producto);
 
     public int insertarProductoConRetorno(Producto producto);
 
