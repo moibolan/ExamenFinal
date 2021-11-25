@@ -50,8 +50,11 @@ public class ProductResource {
             Producto producto1 = productoService.seleccionarProducto(producto);
             return Response.ok(producto1, MediaType.APPLICATION_JSON).build();
         }else{
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+            throw new WebApplicationException(Response.status(422).entity("Error al insertar los datos en la BD, verificar que los campos cumplan los requerimientos.").build());
         }
+
+
+
     }
 
     @PUT
@@ -68,9 +71,11 @@ public class ProductResource {
                 productoService.actualizarProducto(producto);
                 return Response.ok(producto, MediaType.APPLICATION_JSON).build();
             }
+
             return Response.status(404).entity("Error el producto no fue encontrado.").build();
         }catch(Exception ex){
             throw new WebApplicationException(Response.Status.INTERNAL_SERVER_ERROR);
+
         }
     }
 
@@ -110,7 +115,7 @@ public class ProductResource {
                 }
             }
         }catch (Exception e){
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+            throw new WebApplicationException(Response.status(422).entity("Error al insertar los datos en la BD, verificar que los campos cumplan los requerimientos.").build());
         }
 }
 }
